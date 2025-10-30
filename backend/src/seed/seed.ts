@@ -1,7 +1,5 @@
-import { Experience } from "./models/experience";
+import { Experience } from "../models/experience";
 
-// Seed database with sample data
-// for dummy experiences
 export const seedData = async (): Promise<{ success: boolean; message: string; count?: number; error?: string }> => {
   try {
     await Experience.deleteMany({});
