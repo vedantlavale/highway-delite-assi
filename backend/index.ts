@@ -4,7 +4,7 @@ import connectDB from "./src/db/connectDB";
 import rootRouter from "./src/routes/index";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -22,7 +22,10 @@ async function startServer() {
     });
   } catch (error) {
     console.error("Failed to start server:", error);
-    process.exit(1);
+    // Start server anyway
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT} (DB connection failed)`);
+    });
   }
 }
 
