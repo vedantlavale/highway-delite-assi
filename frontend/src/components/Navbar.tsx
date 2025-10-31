@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
+import Logo from "../assets/logo.svg";
 
 interface NavbarProps {
   onSearch?: (query: string) => void;
@@ -19,19 +20,7 @@ export function Navbar({ onSearch, showSearch = false }: NavbarProps) {
             className="flex items-center cursor-pointer"
             onClick={() => navigate("/")}
           >
-            <div className="bg-black text-white p-2 rounded-full mr-3">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2L2 7v10c0 5.5 3.8 9.7 9 11 5.2-1.3 9-5.5 9-11V7l-10-5z" />
-              </svg>
-            </div>
-            <span className="text-xl font-bold text-gray-900">
-              Highway Delite
-            </span>
+            <img src={Logo} alt="Highway Delite" className="h-12 w-auto mr-3" />
           </div>
 
           {showSearch && (
