@@ -40,7 +40,7 @@ export function Navbar({ onSearch, showSearch = false }: NavbarProps) {
                 <Input
                   type="text"
                   placeholder="Search experiences"
-                  className="pl-10 bg-gray-50 border-gray-300 w-full min-w-[140px] sm:min-w-48 lg:min-w-80 focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                  className="pl-10 bg-gray-50 border-gray-300 w-full min-w-[140px] sm:min-w-48 lg:min-w-80 focus:ring-2 focus:ring-[#FFD643] focus:border-transparent"
                   onChange={(e) => onSearch?.(e.target.value)}
                 />
                 <Search
@@ -48,7 +48,7 @@ export function Navbar({ onSearch, showSearch = false }: NavbarProps) {
                   size={18}
                 />
               </div>
-              <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6 py-2">
+              <Button className="bg-[#FFD643] hover:bg-[#FFD643] text-black font-medium px-6 py-2">
                 <span className="hidden sm:inline">Search</span>
                 <Search className="sm:hidden" size={18} />
               </Button>

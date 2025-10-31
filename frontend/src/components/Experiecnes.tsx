@@ -137,7 +137,7 @@ export function Details() {
                   <Button
                     key={slot.date}
                     variant={selectedDate === slot.date ? "default" : "outline"}
-                    className={selectedDate === slot.date ? "bg-yellow-400 hover:bg-yellow-500 text-black font-semibold" : ""}
+                    className={selectedDate === slot.date ? "bg-[#FFD643] hover:bg-[#FFD643] text-black font-semibold" : ""}
                     onClick={() => {
                       setSelectedDate(slot.date);
                       setSelectedTime("");
@@ -164,7 +164,7 @@ export function Details() {
                         variant={selectedTime === timeSlot.time ? "default" : "outline"}
                         className={`justify-between ${
                           selectedTime === timeSlot.time 
-                            ? "bg-yellow-400 hover:bg-yellow-500 text-black font-semibold" 
+                            ? "bg-[#FFD643] hover:bg-[#FFD643] text-black font-semibold" 
                             : ""
                         } ${isSoldOut ? "opacity-50 cursor-not-allowed" : ""}`}
                         disabled={isSoldOut}
@@ -251,7 +251,7 @@ export function Details() {
               </div>
 
               <Button
-                className="w-full bg-[#FFDE59] hover:bg-yellow-400 text-black font-medium text-lg p-3 my-4 rounded-xl mt-2"
+                className="w-full bg-[#FFD643] hover:bg-[#FFD643] text-black font-medium text-lg p-3 my-4 rounded-xl mt-2"
                 onClick={handleConfirm}
                 disabled={!selectedDate || !selectedTime}
                 style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)' }}

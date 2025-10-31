@@ -282,7 +282,7 @@ export function Checkout() {
                 </div>
 
                 <Button
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-6 text-lg"
+                  className="w-full bg-[#FFD643] hover:bg-[#FFD643] text-black font-semibold py-6 text-lg"
                   onClick={handleSubmit}
                   disabled={loading}
                 >
