@@ -1,0 +1,61 @@
+import { useNavigate } from "react-router-dom";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Search } from "lucide-react";
+
+interface NavbarProps {
+  onSearch?: (query: string) => void;
+  showSearch?: boolean;
+}
+
+export function Navbar({ onSearch, showSearch = false }: NavbarProps) {
+  const navigate = useNavigate();
+
+  return (
+    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 gap-6">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            <div className="bg-black text-white p-2 rounded-full mr-3">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 2L2 7v10c0 5.5 3.8 9.7 9 11 5.2-1.3 9-5.5 9-11V7l-10-5z" />
+              </svg>
+            </div>
+            <span className="text-xl font-bold text-gray-900">
+              Highway Delite
+            </span>
+          </div>
+
+          {showSearch && (
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Search experiences"
+                  className="pl-10 bg-gray-50 border-gray-300 w-full min-w-[140px] sm:min-w-48 lg:min-w-80 focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                  onChange={(e) => onSearch?.(e.target.value)}
+                />
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+              </div>
+              <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-medium px-6 py-2">
+                <span className="hidden sm:inline">Search</span>
+                <Search className="sm:hidden" size={18} />
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
