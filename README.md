@@ -37,6 +37,26 @@ A full-stack web application for booking adventure experiences. Users can browse
 - **HTTP Client**: Axios
 - **Validation**: Zod
 
+## 💾 Caching in Frontend
+
+The frontend implements several caching strategies to improve performance and user experience:
+
+### Browser Caching
+- **Static Assets**: Images, CSS, and JavaScript files are cached using appropriate HTTP headers
+- **Service Worker**: Implements caching for offline functionality and faster subsequent loads
+- **Local Storage**: User preferences and non-sensitive data are stored locally
+
+### API Response Caching
+- **In-Memory Caching**: Frequently accessed data like experience lists are cached in memory using React's state management
+- **HTTP Caching**: Axios interceptors handle conditional requests and cache headers
+- **Background Refresh**: Stale data is refreshed in the background while serving cached content to users
+
+### Implementation Details
+- **Cache Keys**: Based on URL and request parameters for efficient lookups
+- **Cache Invalidation**: Automatic invalidation on data mutations (e.g., after booking)
+- **Error Handling**: Graceful fallbacks to cached data when network requests fail
+- **Performance Monitoring**: Cache hit/miss ratios are tracked for optimization
+
 ## 📦 Installation
 
 ### Prerequisites
