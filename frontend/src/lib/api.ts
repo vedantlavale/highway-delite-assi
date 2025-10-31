@@ -161,7 +161,7 @@ export const validatePromoCode = async (code: string, subtotal: number): Promise
     throw new Error(`Invalid request: ${requestValidation.error.message}`);
   }
 
-  const response = await api.post('/promo/validate', requestValidation.data);
+  const response = await api.post('/promos/validate', requestValidation.data);
   
   const parsedResponse = promoCodeSchema.safeParse(response.data);
   if (!parsedResponse.success) {
