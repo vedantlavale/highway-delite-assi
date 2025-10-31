@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://highway-delite-assi.onrender.com'], // Allow frontend and backend ports, and production
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://highway-delite-assi.onrender.com', 'https://highway-delite-assi.vercel.app'], // Allow frontend and backend ports, and production
   credentials: true
 }));
 app.use(express.json());
