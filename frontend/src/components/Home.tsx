@@ -1,44 +1,44 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { Navbar } from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getExperiences, type Experience } from "@/lib/api";
+import { type Experience, getExperience } from "@/lib/api";
+import { useExperiences, usePrefetchExperiences, queryKeys } from "@/lib/hooks";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Home() {
   const navigate = useNavigate();
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchExperiences = async () => {
-    setLoading(true);
-    setExperiences([]); // Clear previous experiences before fetching new ones
-    try {
-      const data = await getExperiences(currentPage, 8, searchQuery);
-      setExperiences(data.data);
-      setTotalPages(data.pagination.totalPages);
-    } catch (error) {
-      console.error("Error fetching experiences:", error);
-      setExperiences([]);
-      setTotalPages(1);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  const { data, isLoading: loading } = useExperiences(currentPage, 8, searchQuery);
+  
+  const experiences = data?.data || [];
+  const totalPages = data?.pagination.totalPages || 1;
+  
+  const prefetchNextPage = usePrefetchExperiences(currentPage + 1, 8, searchQuery);
+  
   useEffect(() => {
-    fetchExperiences();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, searchQuery]);
+    if (currentPage < totalPages) {
+      prefetchNextPage();
+    }
+  }, [currentPage, totalPages, prefetchNextPage]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     setCurrentPage(1);
+  };
+
+  const handleExperienceHover = (experienceId: string) => {
+    queryClient.prefetchQuery({
+      queryKey: queryKeys.experience(experienceId),
+      queryFn: () => getExperience(experienceId),
+      staleTime: 10 * 60 * 1000,
+    });
   };
 
   const getAvailabilityStatus = (experience: Experience) => {
@@ -74,10 +74,12 @@ export function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
               {experiences.map((experience) => {
                 const availableSpots = getAvailabilityStatus(experience);
+                
                 return (
                   <Card
                     key={experience._id}
                     className="overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer border-x-2 border-b-2 border-gray-200 flex flex-col bg-gray-100 rounded-xl py-0 gap-0"
+                    onMouseEnter={() => handleExperienceHover(experience._id)}
                   >
                     <div className="relative w-full h-60 overflow-hidden bg-gray-200 rounded-t-xl">
                       <img

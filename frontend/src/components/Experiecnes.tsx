@@ -3,38 +3,23 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getExperience, type Experience } from "@/lib/api";
+import { useExperience } from "@/lib/hooks";
 import { ArrowLeft, Clock } from "lucide-react";
 
 export function Details() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [experience, setExperience] = useState<Experience | null>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    if (id) {
-      fetchExperience(id);
-    }
-  }, [id]);
+  const { data: experience, isLoading: loading } = useExperience(id);
 
-  const fetchExperience = async (experienceId: string) => {
-    setLoading(true);
-    try {
-      const data = await getExperience(experienceId);
-      setExperience(data);
-      if (data.slots.length > 0) {
-        setSelectedDate(data.slots[0].date);
-      }
-    } catch (error) {
-      console.error("Error fetching experience:", error);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (experience && experience.slots.length > 0 && !selectedDate) {
+      setSelectedDate(experience.slots[0].date);
     }
-  };
+  }, [experience, selectedDate]);
 
   const getAvailableSpots = (time: string) => {
     if (!experience || !selectedDate) return 0;
